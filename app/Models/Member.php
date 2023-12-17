@@ -10,6 +10,8 @@ use App\Models\Transaction;
 
 class Member extends Model
 {
+    protected  $primaryKey = 'id';
+
     use HasFactory;
 
     public function membership() {

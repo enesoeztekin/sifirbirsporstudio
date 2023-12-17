@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("name");
             $table->timestamp('created_at');
             $table->float("amount");
-
             $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members');
         });

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Package;
 use App\Models\Member;
 use App\Models\Membership;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use DateTime;
 use Carbon\Carbon;
@@ -98,7 +99,7 @@ class MemberController extends Controller
 
         // Checking if an error occured during saving
         if(!$result){
-            return redirect('add-member')->with('error', 'Bir şeyler yanlış gitti! Lütfen tekrar deneyiniz.');
+            return back()->with('error', 'Bir şeyler yanlış gitti! Lütfen tekrar deneyiniz.');
         }
 
 
@@ -122,8 +123,22 @@ class MemberController extends Controller
         $result = $membership->save();
 
         if(!$result){
-            return redirect('add-member')->with('error', 'Üyelik oluştururken hata ile karşılaşıldı. Lütfen tekrar deneyin.');
+            return back()->with('error', 'Üyelik oluştururken hata ile karşılaşıldı. Lütfen tekrar deneyin.');
         }
+
+        //Creating a new transaction.
+        $transaction = new Transaction();
+        $transaction->member_id = $member->id;
+        $transaction->name = $package->package_name . " Paket Satışı";
+        $transaction->created_at = Carbon::now('Turkey');
+        $transaction->amount = $package->package_cost;
+
+        $result = $transaction->save();
+
+        if(!$result){
+            return back()->with('error', 'üyelik oluşturuldu fakat işlem oluşturulamadı. Muhasabe sayfasından işlem ekleyin.');
+        }
+
 
         return redirect('members')->with('success', 'Üye eklendi.');
     }

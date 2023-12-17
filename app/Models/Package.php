@@ -9,6 +9,8 @@ class Package extends Model
 {
     use HasFactory;
 
+    protected  $primaryKey = 'id';
+
     protected $fillable = [
         'package_name',
         'package_period',

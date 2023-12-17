@@ -36,27 +36,9 @@
                 </div>
             </div>
         </div>
-        <div class="w-full px-6 mt-6 md:mt-0 sm:w-1/2 xl:w-1/4 xl:mt-0">
-            <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                <div class="p-3 bg-blue-400 bg-opacity-75 rounded-full text-white text-[26px]">&nbsp;₺&nbsp;</div>
-                <div class="mx-5">
-                    <h4 class="text-2xl font-bold text-gray-700"> {{$totalProfitThisMonth}}₺ </h4>
-                    <div class="text-gray-500"> Bu Ayın Kazancı </div>
-                </div>
-            </div>
-        </div>
         <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/4 xl:mt-0">
             <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                <div class="p-3 bg-green-600 bg-opacity-75 rounded-full text-white text-[26px]">&nbsp;₺&nbsp;</div>
-                <div class="mx-5">
-                    <h4 class="text-2xl font-bold text-gray-700"> {{$totalProfit}}₺ </h4>
-                    <div class="text-gray-500"> Toplam Kazanç </div>
-                </div>
-            </div>
-        </div>
-        <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/4 xl:mt-0">
-            <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                <div class="p-3 bg-pink-600 bg-opacity-75 rounded-full"><svg xmlns="http://www.w3.org/2000/svg"
+                <div class="p-3 bg-green-600 bg-opacity-75 rounded-full"><svg xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                         class="w-6 h-6 fill-current text-white">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -66,6 +48,34 @@
                 <div class="mx-5">
                     <h4 class="text-2xl font-bold text-gray-700"> {{$activeMemberCount}} </h4>
                     <div class="text-gray-500"> Aktif Üye </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full px-6 mt-6 md:mt-0 sm:w-1/2 xl:w-1/4 xl:mt-0">
+            <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                <div class="p-3 bg-blue-400 bg-opacity-75 rounded-full text-white text-[26px]"><svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="w-6 h-6 fill-current text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg></div>
+                <div class="mx-5">
+                    <h4 class="text-2xl font-bold text-gray-700"> {{$maleMemberCount}} </h4>
+                    <div class="text-gray-500"> Erkek Üye </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/4 xl:mt-0">
+            <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                <div class="p-3 bg-pink-600 bg-opacity-75 rounded-full text-white text-[26px]"><svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="w-6 h-6 fill-current text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg></div>
+                <div class="mx-5">
+                    <h4 class="text-2xl font-bold text-gray-700"> {{$femaleMemberCount}} </h4>
+                    <div class="text-gray-500"> Kadın Üye </div>
                 </div>
             </div>
         </div>

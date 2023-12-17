@@ -20,27 +20,15 @@ class DashboardController extends Controller
             return redirect('login');
         }
 
-        $soldPackages = Membership::select('package_cost')->get();
-
-        $totalProfit = 0;
-
-        foreach ($soldPackages as $soldPackage) {
-            $totalProfit += $soldPackage->package_cost;
-        }
-
-        $soldPackagesThisMonth = Membership::select('starting_date', 'package_cost')->whereMonth('starting_date', date('m'))->get();
-
-        $totalProfitThisMonth = 0;
-
-        foreach ($soldPackagesThisMonth as $soldPackageThisMonth) {
-            $totalProfitThisMonth += $soldPackageThisMonth->package_cost;
-        }
+        $totalMemberCount = Member::count();
+        $maleMemberCount = Member::where('gender', 'Erkek')->count();
+        $femaleMemberCount = Member::where('gender', 'Kadın')->count();
 
         //Get the last 5 members from the database
-        $members = Member::orderBy('created_at', 'desc')->take(5)->get();
+        $lastFiveMembers = Member::orderBy('created_at', 'desc')->take(5)->get();
 
         $totalMemberCount = Membership::count();
         $activeMemberCount = Membership::whereDate('expiration_date', '>=', Carbon::now())->count();
-        return view('dashboard')->with('members', $members)->with('totalProfit', $totalProfit)->with('totalProfitThisMonth', $totalProfitThisMonth)->with('totalMemberCount', $totalMemberCount)->with('activeMemberCount', $activeMemberCount);
+        return view('dashboard')->with('members', $lastFiveMembers)->with('totalMemberCount', $totalMemberCount)->with('maleMemberCount', $maleMemberCount)->with('femaleMemberCount', $femaleMemberCount)->with('activeMemberCount', $activeMemberCount);
     }
 }

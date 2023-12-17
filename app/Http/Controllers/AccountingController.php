@@ -42,4 +42,19 @@ class AccountingController extends Controller
 
         return view('accounting')->with('transactions', $transactions)->with('totalProfitThisMonth', $totalProfitThisMonth)->with('totalProfitLastSixMonths', $totalProfitLastSixMonths);
     }
+
+    public function delete($id){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
+        $transaction = Transaction::where('id', $id)->first();
+        if(!$transaction){
+            return back()->with('error', 'İşlem bulunamadı!');
+        }
+
+        $transaction->delete();
+
+        return back()->with('success', 'İşlem başarıyla silindi.');
+    }
 }

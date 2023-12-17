@@ -11,6 +11,7 @@ class Membership extends Model
     use HasFactory;
 
     public $timestamps = false;
+    protected  $primaryKey = 'id';
 
     protected $fillable = [
         'package_id',
