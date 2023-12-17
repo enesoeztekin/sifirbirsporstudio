@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MeasurementController;
+use App\Http\Controllers\AccountingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,17 +36,34 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
 Route::get('/members', [MemberController::class, 'all']);
 
-// Add a member
-Route::get('/member/add', [MemberController::class, 'index'])->name('index');
-
 // Get All Packages
 Route::get('/packages', [PackageController::class, 'index'])->name('index');
+
+// Get all measurements
+Route::get('/measurements', [MeasurementController::class,'all'])->name('all');
+
+// Get all accounting transactions
+Route::get('/accounting', [AccountingController::class, 'index'])->name('index');
+
+// Settings page
+Route::get('/settings', function () {
+    if (!Auth::check()) {
+        return redirect('login');
+    }
+    return view('settings');
+});
+
+// Add a member
+Route::get('/member/add', [MemberController::class, 'index'])->name('index');
 
 // Delete package by id
 Route::get('/package/del/{id}', [PackageController::class, 'delete'])->name('delete');
 
 // Delete member by id
 Route::get('/member/delete/{id}', [MemberController::class, 'delete'])->name('delete');
+
+// Delete member by id
+Route::get('/measurement/del/{id}', [MeasurementController::class, 'delete'])->name('delete');
 
 // Freeze member by id
 Route::get('/member/freeze/{memberId}', [MemberController::class, 'freeze'])->name('freeze');
@@ -60,16 +79,14 @@ Route::get('/package/add', function () {
     return view('addpackage');
 });
 
+// Add a new measurement
+Route::get('/measurement/add', [MeasurementController::class, 'index'])->name('index');
+
 // Get package by id
 Route::get('/package/{id}', [PackageController::class, 'getPackage'])->name('getPackage');
 
-// Settings page
-Route::get('/settings', function () {
-    if (!Auth::check()) {
-        return redirect('login');
-    }
-    return view('settings');
-});
+// Get measurement by id
+Route::get('/measurement/{measurementId}', [MeasurementController::class, 'getMeasurement'])->name('getMeasurement');
 
 // Add a new package
 Route::post('/package/add', [PackageController::class, 'add'])->name('add-package');
@@ -77,8 +94,14 @@ Route::post('/package/add', [PackageController::class, 'add'])->name('add-packag
 // Add a new member
 Route::post('/member/add', [MemberController::class, 'add'])->name('add-member');
 
+// Add a measurement
+Route::post('/measurement/add', [MeasurementController::class, 'add'])->name('add-measurement');
+
 // Edit package by id
 Route::post('/package/{id}', [PackageController::class, 'update'])->name('update-package');
+
+// Edit package by id
+Route::post('/measurement/{measurementId}', [MeasurementController::class, 'update'])->name('update-measurement');
 
 // Admin Authentication
 Route::post('/auth', [LoginController::class, 'auth'])->name('auth');

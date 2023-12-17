@@ -34,7 +34,7 @@
         <input type="text" id="package_cost" value="{{$package->package_cost}}" name="package_cost" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sayı olarak giriniz. Örneğin: 750, 1500, 2000... ">
     </div>
     <div>
-        <input type="submit" value="Oluştur" class="bg-amber-500 h-12 px-3 rounded-lg text-sm w-full">
+        <input type="submit" value="Güncelle" class="bg-amber-500 h-12 px-3 rounded-lg text-sm w-full">
     </div>
     </form>
 @endsection

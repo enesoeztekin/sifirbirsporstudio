@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('packages', function (Blueprint $table) {
-            $table->id();
-            $table->string('package_name');
-            $table->boolean('is_student');
-            $table->boolean('is_vip');
-            $table->string('package_period');
-            $table->integer('package_cost');
-            $table->integer('freeze_right_count');
-            $table->timestamps();
-        });
+        // Schema::create('packages', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('package_name');
+        //     $table->boolean('is_student');
+        //     $table->boolean('is_vip');
+        //     $table->string('package_period');
+        //     $table->integer('package_cost');
+        //     $table->integer('freeze_right_count');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packages');
+        // Schema::dropIfExists('packages');
     }
 };

@@ -1,4 +1,4 @@
-<div class="">
+
     <table id="membersTable" class="min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
         <thead>
             <tr>
@@ -25,8 +25,9 @@
                         <div class="flex-shrink-0 w-10 h-10"><img class="w-10 h-10 rounded-full"
                                 src="{{ asset('assets/sfrbir.png') }}" alt=""></div>
                         <div class="ml-4">
-                            <div class="text-sm font-medium leading-5 text-gray-900">{{$member->fullname}}</div>
-                            <div class="text-sm leading-5 text-gray-500">{{$member->email}}</div>
+                            <div class="text-sm font-bold leading-8 text-gray-900">{{$member->fullname}}</div>
+                            <div class="text-sm leading-6 font-medium text-gray-500">{{$member->email}}</div>
+                            <div class="text-sm leading-6 font-medium text-gray-500">{{$member->phone}}</div>
                         </div>
                     </div>
                 </td>
@@ -150,4 +151,3 @@
             @endforeach
         </tbody>
     </table>
-</div>

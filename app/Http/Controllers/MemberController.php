@@ -50,7 +50,7 @@ class MemberController extends Controller
             'membership'=>function($q){
                 $q->get();
             },
-        ])->select('id','fullname', 'email')->get();
+        ])->select('id','fullname', 'email', 'phone')->get();
         //dd(gettype($members[0]->membership->freeze_expiration_date));
         return view('members')->with('members', $members);
     }
