@@ -36,13 +36,13 @@ class MeasurementController extends Controller
     public function add(Request $request){
         $measurement = new Measurement();
         $measurement->member_id = $request->member;
-        $measurement->weight = $request->weight;
-        $measurement->arm = $request->arm;
-        $measurement->chest = $request->chest;
-        $measurement->shoulders = $request->shoulders;
-        $measurement->waist = $request->waist;
-        $measurement->legs = $request->legs;
-        $measurement->hips = $request->hips;
+        $measurement->weight = $request->weight ? $request->weight : 0;
+        $measurement->arm = $request->arm ? $request->arm : 0;
+        $measurement->chest = $request->chest ? $request->chest : 0;
+        $measurement->shoulders = $request->shoulders ? $request->shoulders : 0;
+        $measurement->waist = $request->waist ? $request->waist : 0;
+        $measurement->legs = $request->legs ? $request->legs : 0;
+        $measurement->hips = $request->hips ? $request->hips : 0;
 
         $result = $measurement->save();
 
@@ -67,10 +67,10 @@ class MeasurementController extends Controller
         $result = $measurement->delete();
 
         if(!$result){
-            return redirect('measurements')->with('error', 'Ölçüm silinemedi! Lütfen tekrar deneyiniz.');
+            return back()->with('error', 'Ölçüm silinemedi! Lütfen tekrar deneyiniz.');
         }
 
-        return redirect('measurements')->with('success', 'Ölçüm başarıyla silindi.');
+        return back()->with('success', 'Ölçüm başarıyla silindi.');
     }
 
     public function getMeasurement($measurementId){
@@ -82,6 +82,41 @@ class MeasurementController extends Controller
         $member = Member::find($measurement->member_id)->select('id', 'fullname', 'gender')->first();
 
         return view('editmeasurement')->with('measurement', $measurement)->with('member', $member);
+    }
+
+    public function getMeasurementsByMemberId($memberId){
+        $member = Member::where('id', $memberId)->select('id', 'fullname', 'gender')->first();
+        $measurements = Measurement::where('member_id', $memberId)->orderBy('created_at', 'desc')->get();
+
+        return view('membermeasurements')->with('member', $member)->with('measurements', $measurements);
+    }
+
+    public function getMemberForAddMemberMeasurement($memberId){
+        $member = Member::where('id', $memberId)->select('id', 'fullname', 'gender')->first();
+        if(!$member){
+            return redirect('measurements')->with('error', 'Üye bulunamadı!');
+        }
+        return view('addmembermeasurement')->with('member', $member);
+    }
+
+    public function addMeasurementByMemberId(Request $request, $memberId){
+        $measurement = new Measurement();
+        $measurement->member_id = $memberId;
+        $measurement->weight = $request->weight ? $request->weight : 0;
+        $measurement->arm = $request->arm ? $request->arm : 0;
+        $measurement->chest = $request->chest ? $request->chest : 0;
+        $measurement->shoulders = $request->shoulders ? $request->shoulders : 0;
+        $measurement->waist = $request->waist ? $request->waist : 0;
+        $measurement->legs = $request->legs ? $request->legs : 0;
+        $measurement->hips = $request->hips ? $request->hips : 0;
+
+        $result = $measurement->save();
+
+        if(!$result){
+            return redirect('measurements/'.$memberId)->with('error', 'Ölçüm eklenemedi! Lütfen tekrar deneyiniz.');
+        }
+
+        return redirect('measurements/'.$memberId)->with('success', 'Ölçüm başarıyla eklendi.');
     }
 
     public function update(Request $request, $measurementId){

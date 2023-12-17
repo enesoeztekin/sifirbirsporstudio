@@ -42,6 +42,9 @@ Route::get('/packages', [PackageController::class, 'index'])->name('index');
 // Get all measurements
 Route::get('/measurements', [MeasurementController::class,'all'])->name('all');
 
+// Get measurement by member_id
+Route::get('/measurements/{memberId}', [MeasurementController::class,'getMeasurementsByMemberId'])->name('getMeasurementsByMemberId');
+
 // Get all accounting transactions
 Route::get('/accounting', [AccountingController::class, 'index'])->name('index');
 
@@ -65,6 +68,9 @@ Route::get('/member/delete/{id}', [MemberController::class, 'delete'])->name('de
 // Delete member by id
 Route::get('/measurement/del/{id}', [MeasurementController::class, 'delete'])->name('delete');
 
+// Delete member by id
+Route::get('/transaction/del/{id}', [AccountingController::class, 'delete'])->name('delete');
+
 // Freeze member by id
 Route::get('/member/freeze/{memberId}', [MemberController::class, 'freeze'])->name('freeze');
 
@@ -82,6 +88,9 @@ Route::get('/package/add', function () {
 // Add a new measurement
 Route::get('/measurement/add', [MeasurementController::class, 'index'])->name('index');
 
+// Add a new measurement
+Route::get('/measurement/add/{memberId}', [MeasurementController::class, 'getMemberForAddMemberMeasurement'])->name('addmembermeasurement');
+
 // Get package by id
 Route::get('/package/{id}', [PackageController::class, 'getPackage'])->name('getPackage');
 
@@ -97,10 +106,13 @@ Route::post('/member/add', [MemberController::class, 'add'])->name('add-member')
 // Add a measurement
 Route::post('/measurement/add', [MeasurementController::class, 'add'])->name('add-measurement');
 
+// Add a measurement
+Route::post('/measurement/add/{memberId}', [MeasurementController::class, 'addMeasurementByMemberId'])->name('add-measurement-by-member-id');
+
 // Edit package by id
 Route::post('/package/{id}', [PackageController::class, 'update'])->name('update-package');
 
-// Edit package by id
+// Edit measurement by id
 Route::post('/measurement/{measurementId}', [MeasurementController::class, 'update'])->name('update-measurement');
 
 // Admin Authentication
