@@ -235,7 +235,7 @@ class MemberController extends Controller
         $member = Member::find($id);
 
         if(!$member){
-            return redirect('members')->with('error', 'Üye bulunamadı.');
+            return back()->with('error', 'Üye bulunamadı.');
         }
 
         $membership = Membership::where('member_id', $id)->first();
@@ -244,7 +244,7 @@ class MemberController extends Controller
         $member->delete();
         $membership->delete();
 
-        return redirect('members')->with('success', 'Üye silindi.');
+        return back()->with('success', 'Üye silindi.');
     }
 
 
