@@ -171,6 +171,10 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $member = Member::find($id);
         $member->fullname = $request->input('fullname');
         $member->age = $request->input('age');
