@@ -35,6 +35,9 @@ class PackageController extends Controller
 
     public function add(Request $request)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
 
         // Generating Package
         $package = new Package();
@@ -71,6 +74,10 @@ class PackageController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         // Veritabanından ilgili paketi bulun
         $package = Package::find($id);
 
@@ -99,6 +106,10 @@ class PackageController extends Controller
     }
 
     public function delete($id){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $package = Package::find($id);
 
         if (!$package) {

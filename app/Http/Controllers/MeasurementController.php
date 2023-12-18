@@ -34,6 +34,10 @@ class MeasurementController extends Controller
     }
 
     public function add(Request $request){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $measurement = new Measurement();
         $measurement->member_id = $request->member;
         $measurement->weight = $request->weight ? $request->weight : 0;
@@ -74,6 +78,10 @@ class MeasurementController extends Controller
     }
 
     public function getMeasurement($measurementId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $measurement = Measurement::find($measurementId);
         if(!$measurement){
             return redirect('measurements')->with('error', 'Ölçüm bulunamadı!');
@@ -85,6 +93,10 @@ class MeasurementController extends Controller
     }
 
     public function getMeasurementsByMemberId($memberId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $member = Member::where('id', $memberId)->select('id', 'fullname', 'gender')->first();
         $measurements = Measurement::where('member_id', $memberId)->orderBy('created_at', 'desc')->get();
 
@@ -92,6 +104,10 @@ class MeasurementController extends Controller
     }
 
     public function getMemberForAddMemberMeasurement($memberId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $member = Member::where('id', $memberId)->select('id', 'fullname', 'gender')->first();
         if(!$member){
             return redirect('measurements')->with('error', 'Üye bulunamadı!');
@@ -100,6 +116,10 @@ class MeasurementController extends Controller
     }
 
     public function addMeasurementByMemberId(Request $request, $memberId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $measurement = new Measurement();
         $measurement->member_id = $memberId;
         $measurement->weight = $request->weight ? $request->weight : 0;
@@ -120,6 +140,10 @@ class MeasurementController extends Controller
     }
 
     public function update(Request $request, $measurementId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
         $measurement = Measurement::find($measurementId);
         if(!$measurement){
             return redirect('measurements')->with('error', 'Ölçüm bulunamadı!');
