@@ -238,7 +238,11 @@ class MemberController extends Controller
             return redirect('members')->with('error', 'Üye bulunamadı.');
         }
 
+        $membership = Membership::where('member_id', $id)->first();
+
+
         $member->delete();
+        $membership->delete();
 
         return redirect('members')->with('success', 'Üye silindi.');
     }
