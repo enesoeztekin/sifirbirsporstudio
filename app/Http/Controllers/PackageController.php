@@ -46,15 +46,15 @@ class PackageController extends Controller
         if($package->package_period == 1){
             // For 1 month packages.
             $package->freeze_right_count = 0;
-        }elseif ($package->package_period == 3){
-            // For 3 months packages.
+        }elseif ($package->package_period < 6 && $package->package_period >= 3){
+            // For [3 - 6) = {3,4,5} months packages.
             $package->freeze_right_count = 1;
-        }elseif($package->package_period == 6){
-            // For 6 month packages.
+        }elseif($package->package_period >= 6 && $package->package_period < 12){
+            // For [6, 12) = {6, 7, 8, 9, 10, 11} month packages.
             $package->freeze_right_count = 2;
-        }else {
-            // Other packages possible.
-            $package->freeze_right_count = 0;
+        }elseif($package->package_period >= 12 && $package->package_period < 24){
+            // For [12, 24) = {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23} month packages.
+            $package->freeze_right_count = 4;
         }
 
         //Saving package to database
