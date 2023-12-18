@@ -13,19 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('measurements', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->float('weight');
-        //     $table->float('arm');
-        //     $table->float('chest');
-        //     $table->float('shoulders');
-        //     $table->float('waist');
-        //     $table->float('legs');
-        //     $table->float('hips');
-        //     $table->unsignedBigInteger('member_id');
-        //     $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
-        //     $table->timestamps();
-        // });
+        Schema::create('measurements', function (Blueprint $table) {
+            $table->id();
+            $table->float('weight');
+            $table->float('arm');
+            $table->float('chest');
+            $table->float('shoulders');
+            $table->float('waist');
+            $table->float('legs');
+            $table->float('hips');
+            $table->unsignedBigInteger('member_id');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-       // Schema::dropIfExists('measurements');
+       Schema::dropIfExists('measurements');
     }
 };

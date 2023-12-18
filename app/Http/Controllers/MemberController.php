@@ -110,6 +110,7 @@ class MemberController extends Controller
         // Retrieve a package by package_id from database
         $package_id = $request->input('package');
         $package = Package::find($package_id);
+        $membership->package_id = $package_id;
         $membership->starting_date = Carbon::now('Turkey');
         $months_to_add = $package->package_period;
         $starting_date = Carbon::now('Turkey');
@@ -143,10 +144,86 @@ class MemberController extends Controller
         return redirect('members')->with('success', 'Üye eklendi.');
     }
 
+    public function getMember($id){
+        if(!Auth::check()){
+            return redirect('login');
+        }
 
-    public function update(Request $request)
+        $member = Member::with(
+            [
+                'membership' => function ($q) {
+                    $q->get();
+                },
+                'membership.package' => function ($q) {
+                    $q->get();
+                }
+            ]
+        )->where('id', $id)->first();
+
+
+        if(!$member){
+            return back()->with('error', 'Üye bulunamadı.');
+        }
+
+        return view('editmember')->with('member', $member);
+    }
+
+
+    public function update(Request $request, $id)
     {
+        $member = Member::find($id);
+        $member->fullname = $request->input('fullname');
+        $member->age = $request->input('age');
+        $member->fullname = $request->input('fullname');
+        $member->age = $request->input('age');
+        $member->job = $request->input('job');
 
+        if($request->input('gender') == "male"){
+            $member->gender = "Erkek";
+        }else if ($request->input('gender') == "female"){
+            $member->gender = "Kadın";
+        }else{
+            $member->gender = "Diğer";
+        }
+
+        $member->phone = $request->input('phone');
+        $member->email = $request->input('email');
+
+        if(!$request->input('injury')){
+            $member->injury = "-";
+        }else{
+            $member->injury = $request->input('injury');
+        }
+
+        $result = $member->save();
+
+        if(!$result){
+            return back()->with('error', 'Üye güncellenemedi. Lütfen tekrar deneyin.');
+        }
+
+        // Update membership of the member
+        $membership = Membership::where('member_id', $id)->first();
+        $package_id = $request->input('package');
+        $package = Package::where('id', $package_id)->first();
+        if($membership->package_id != $package_id){
+            $membership->package_period = $package->package_period;
+            $membership->is_student = $package->is_student;
+            $membership->is_vip = $package->is_vip;
+            $membership->package_cost = $package->package_cost;
+
+            // Add the new package period to the old starting date of membership.
+            $months_to_add = $package->package_period;
+            $starting_date = $membership->starting_date;
+            $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
+            $membership->freeze_right_count = $package->freeze_right_count;
+        }
+        $result = $membership->save();
+
+        if(!$result){
+            return back()->with('error', 'Üye güncellenemedi. Lütfen tekrar deneyin.');
+        }
+
+        return redirect('members')->with('success', 'Üye güncellendi.');
 
     }
 

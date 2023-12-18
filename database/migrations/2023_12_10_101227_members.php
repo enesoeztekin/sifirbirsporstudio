@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('members', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string("fullname");
-        //     $table->integer("age");
-        //     $table->string("job");
-        //     $table->string("gender");
-        //     $table->string("phone");
-        //     $table->string("email");
-        //     $table->string("injury")->default("")->nullable();
-        //     $table->timestamps();
-        // });
+        Schema::create('members', function (Blueprint $table) {
+            $table->id();
+            $table->string("fullname");
+            $table->integer("age");
+            $table->string("job");
+            $table->string("gender");
+            $table->string("phone");
+            $table->string("email");
+            $table->string("injury")->default("")->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('members');
+        Schema::dropIfExists('members');
     }
 };

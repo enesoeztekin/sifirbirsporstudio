@@ -94,6 +94,9 @@ Route::get('/measurement/add/{memberId}', [MeasurementController::class, 'getMem
 // Get package by id
 Route::get('/package/{id}', [PackageController::class, 'getPackage'])->name('getPackage');
 
+// Get member by id
+Route::get('/member/edit/{id}', [MemberController::class, 'getMember'])->name('getMember');
+
 // Get measurement by id
 Route::get('/measurement/{measurementId}', [MeasurementController::class, 'getMeasurement'])->name('getMeasurement');
 
@@ -111,6 +114,9 @@ Route::post('/measurement/add/{memberId}', [MeasurementController::class, 'addMe
 
 // Edit package by id
 Route::post('/package/{id}', [PackageController::class, 'update'])->name('update-package');
+
+// Edit member by id
+Route::post('/member/edit/{id}', [MemberController::class, 'update'])->name('update-member');
 
 // Edit measurement by id
 Route::post('/measurement/{measurementId}', [MeasurementController::class, 'update'])->name('update-measurement');
