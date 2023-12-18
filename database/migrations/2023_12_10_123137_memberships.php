@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('freeze_right_count');
             $table->timestamp('freeze_starting_date')->nullable();
             $table->timestamp('freeze_expiration_date')->nullable();
-            $table->timestamp('starting_date');
-            $table->timestamp('expiration_date');
+            $table->timestamp('starting_date')->nullable();
+            $table->timestamp('expiration_date')->nullable();
             $table->integer('package_period');
             $table->boolean('is_student');
             $table->boolean('is_vip');
