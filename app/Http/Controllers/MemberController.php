@@ -251,6 +251,28 @@ class MemberController extends Controller
         return back()->with('success', 'Üye silindi.');
     }
 
+    public function cancel($id){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
+        $member = Member::find($id);
+
+        if(!$member){
+            return back()->with('error', 'Üye bulunamadı.');
+        }
+
+
+        $membership = Membership::where('member_id', $id)->first();
+        $transaction = Transaction::where('member_id', $id)->first();
+
+        $member->delete();
+        $membership->delete();
+        $transaction->delete();
+
+        return back()->with('success', 'Üyelik iptal edildi.s');
+    }
+
 
     public function freeze($memberId){
         if(!Auth::check()){

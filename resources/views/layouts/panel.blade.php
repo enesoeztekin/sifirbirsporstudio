@@ -158,5 +158,23 @@
           menu.classList.toggle('-translate-x-full');
         });
       </script>
+
+      <script>
+
+        function openModal(userId){
+            const modal = document.getElementById('delete-member-popup-'+userId);
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeModal(userId){
+            const modal = document.getElementById('delete-member-popup-'+userId);
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+
+
+      </script>
 </body>
 </html>

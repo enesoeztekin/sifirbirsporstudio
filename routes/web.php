@@ -66,6 +66,9 @@ Route::get('/package/del/{id}', [PackageController::class, 'delete'])->name('del
 Route::get('/member/delete/{id}', [MemberController::class, 'delete'])->name('delete');
 
 // Delete member by id
+Route::get('/membership/cancel/{id}', [MemberController::class, 'cancel'])->name('cancel');
+
+// Delete member by id
 Route::get('/measurement/del/{id}', [MeasurementController::class, 'delete'])->name('delete');
 
 // Delete member by id
