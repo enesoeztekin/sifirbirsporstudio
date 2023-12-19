@@ -65,10 +65,8 @@ class MemberController extends Controller
         $request->validate([
             'fullname' =>'required',
             'age' =>'required',
-            'job' =>'required',
             'gender' =>'required',
             'phone' =>'required',
-            'email' =>'required',
             'package' => 'required',
         ]);
 
@@ -76,7 +74,7 @@ class MemberController extends Controller
         $member = new Member();
         $member->fullname = $request->input('fullname');
         $member->age = $request->input('age');
-        $member->job = $request->input('job');
+        $member->job = $request->input('job') ? $request->input('job') : "-";
 
         if($request->input('gender') == "male"){
             $member->gender = "Erkek";
@@ -87,13 +85,8 @@ class MemberController extends Controller
         }
 
         $member->phone = $request->input('phone');
-        $member->email = $request->input('email');
-
-        if(!$request->input('injury')){
-            $member->injury = "-";
-        }else{
-            $member->injury = $request->input('injury');
-        }
+        $member->email = $request->input('email') ? $request->input('email') : "-";
+        $member->injury = $request->input('injury') ? $request->input('injury') : "-";
 
         $result = $member->save();
 
@@ -111,9 +104,9 @@ class MemberController extends Controller
         $package_id = $request->input('package');
         $package = Package::find($package_id);
         $membership->package_id = $package_id;
-        $membership->starting_date = Carbon::now('Turkey');
+        $membership->starting_date = $request->input('startingdate') ? Carbon::parse($request->input('startingdate'))->setTimezone('Turkey') : Carbon::now('Turkey');
         $months_to_add = $package->package_period;
-        $starting_date = Carbon::now('Turkey');
+        $starting_date = $request->input('startingdate') ? Carbon::parse($request->input('startingdate'))->setTimezone('Turkey') : Carbon::now('Turkey');
         $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
         $membership->package_period = $package->package_period;
         $membership->is_student = $package->is_student;
@@ -130,7 +123,7 @@ class MemberController extends Controller
         //Creating a new transaction.
         $transaction = new Transaction();
         $transaction->member_id = $member->id;
-        $transaction->name = $package->package_name . " Paket Satışı";
+        $transaction->name = $package->package_name . " Paket Satışı". " -> ". $member->fullname;
         $transaction->created_at = Carbon::now('Turkey');
         $transaction->amount = $package->package_cost;
 

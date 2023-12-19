@@ -54,6 +54,10 @@
         <input type="text" id="injury" value="{{ old('injury') }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
+        <label for="startingdate" class="text-white text-sm">Üyelik Başlangıç Tarihi:</label>
+        <input type="datetime-local" id="startingdate" value="{{ old('startingdate') }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sakatlık yoksa (-) yazın.">
+    </div>
+    <div>
         <label for="package" class="text-white text-sm">Paket Seçimi:</label>
         <select id="package" name="package" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12">
            @foreach ($packages as $package)
