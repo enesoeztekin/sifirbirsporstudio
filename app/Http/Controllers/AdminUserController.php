@@ -3,84 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminUser;
-use App\Http\Requests\StoreAdminUserRequest;
-use App\Http\Requests\UpdateAdminUserRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    public function changePassword(Request $request){
+        if(!Auth::check()){
+            return redirect('login');
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $newPassword = $request->input('newPassword');
+        $reNewPassword = $request->input('reNewPassword');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAdminUserRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreAdminUserRequest $request)
-    {
-        //
-    }
+        $adminUser = AdminUser::where('id', Auth::user()->id)->first();
+        if(!Hash::check($request->input('curPassword'), $adminUser->password)){
+            return back()->with('error', 'Mevcut şifrenizi hatalı girdiniz.');
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AdminUser  $adminUser
-     * @return \Illuminate\Http\Response
-     */
-    public function show(AdminUser $adminUser)
-    {
-        //
-    }
+        if($newPassword != $reNewPassword){
+            return back()->with('error', 'Yeni şifreler uyuşmuyor.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AdminUser  $adminUser
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AdminUser $adminUser)
-    {
-        //
-    }
+        $adminUser->password = Hash::make($newPassword);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAdminUserRequest  $request
-     * @param  \App\Models\AdminUser  $adminUser
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAdminUserRequest $request, AdminUser $adminUser)
-    {
-        //
-    }
+        $result = $adminUser->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AdminUser  $adminUser
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AdminUser $adminUser)
-    {
-        //
+        if(!$result){
+            return back()->with('error', 'Şifre değiştirilirken bir sorun oluştu.');
+        }
+
+        return back()->with('success', 'Şifre değiştirme işlemi başarılı.');
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
@@ -126,6 +127,8 @@ Route::post('/measurement/{measurementId}', [MeasurementController::class, 'upda
 
 // Admin Authentication
 Route::post('/auth', [LoginController::class, 'auth'])->name('auth');
+
+Route::post('/settings/changepassword', [AdminUserController::class, 'changePassword'])->name('change-password');
 
 // // Get All Members
 // Route::post('/member/all', [MemberController::class, 'all'])->name('all');
