@@ -55,7 +55,7 @@
     </div>
     <div>
         <label for="startingdate" class="text-white text-sm">Üyelik Başlangıç Tarihi:</label>
-        <input type="datetime-local" id="startingdate" value="{{ old('startingdate') }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
+        <input type="date" id="startingdate" value="{{ old('startingdate') }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
         <label for="package" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Paket Seçimi:</label>
