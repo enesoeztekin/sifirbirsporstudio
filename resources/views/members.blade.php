@@ -31,6 +31,7 @@
       $(document).ready(function() {
           memberTable = $('#membersTable').DataTable({
               dom: 'Btip',
+              order: [[0, 'desc']],
               language: {
                   "zeroRecords": "Bir kayıt bulunamadı.",
                   "info": "<span class='text-white text-sm'>_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor.</span>",
