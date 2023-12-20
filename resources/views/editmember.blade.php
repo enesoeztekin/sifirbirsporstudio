@@ -54,13 +54,23 @@
         <input type="text" id="injury" value="{{ $member->injury }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
+        <label for="startingdate" class="text-white text-sm">Üyelik Başlangıç Tarihi:</label>
+        <input type="date" id="startingdate" value="{{ $member->membership->startingdate }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400">
+    </div>
+    <div>
         <label for="package" class="text-white text-sm">Paket Seçimi:</label>
         <select id="package" name="package" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12">
                <option value="{{$member->membership->package->id}}">{{$member->membership->package->package_name}} / {{$member->membership->package->package_cost}} ₺</option>
+            @foreach($packages as $package)
+                @if ($package->id != $member->membership->package->id)
+                    <option value="{{$package->id}}">{{$package->package_name}} / {{$package->package_cost}} ₺</option>
+                @endif
+
+            @endforeach
         </select>
     </div>
     <div>
-        <input type="submit" value="Oluştur" class="bg-amber-500 h-12 px-3 rounded-lg text-sm w-full cursor-pointer">
+        <input type="submit" value="Güncelle" class="bg-amber-500 h-12 px-3 rounded-lg text-sm w-full cursor-pointer">
     </div>
     </form>
 

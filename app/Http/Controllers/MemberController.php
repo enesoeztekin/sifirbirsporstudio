@@ -158,7 +158,9 @@ class MemberController extends Controller
             return back()->with('error', 'Üye bulunamadı.');
         }
 
-        return view('editmember')->with('member', $member);
+        $packages = Package::all();
+
+        return view('editmember')->with('member', $member)->with('packages', $packages);
     }
 
 
@@ -203,6 +205,7 @@ class MemberController extends Controller
         $package_id = $request->input('package');
         $package = Package::where('id', $package_id)->first();
         if($membership->package_id != $package_id){
+            $membership->package_id = $package_id;
             $membership->package_period = $package->package_period;
             $membership->is_student = $package->is_student;
             $membership->is_vip = $package->is_vip;
@@ -213,6 +216,24 @@ class MemberController extends Controller
             $starting_date = $membership->starting_date;
             $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
             $membership->freeze_right_count = $package->freeze_right_count;
+        }
+
+        // Starting date changed:
+        if($request->input('startingdate') && $request->input('startingdate') != $membership->starting_date){
+            $membership->starting_date = Carbon::parse($request->input('startingdate'))->setTimezone('Turkey');
+
+            // Both package and starting date changed:
+            if($membership->package_id != $package_id){
+                $membership->package_id = $package_id;
+                $months_to_add = $package->package_period;
+                $starting_date = $request->input('startingdate');
+                $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
+                $membership->freeze_right_count = $package->freeze_right_count;
+            }else { // Only starting date changed, package stays the same:
+                $months_to_add = $membership->package_period;
+                $starting_date = $request->input('startingdate');
+                $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
+            }
         }
         $result = $membership->save();
 
