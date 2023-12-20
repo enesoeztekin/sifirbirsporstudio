@@ -11,15 +11,15 @@
         @csrf
     <div>
             <label for="fullname" class="text-white text-sm">Adı Soyadı:</label>
-            <input type="text" value="{{ $member->fullname }}" id="fullname" name="fullname" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Tam adı girin.">
+            <input type="text" value="{{ $member->fullname }}" id="fullname" name="fullname" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Tam adı girin.">
     </div>
     <div>
         <label for="age" class="text-white text-sm">Yaş:</label>
-        <input type="text" id="age" value="{{ $member->age }}" name="age" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Üyenin yaşını girin.">
+        <input type="text" id="age" value="{{ $member->age }}" name="age" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Üyenin yaşını girin.">
     </div>
     <div>
         <label for="job" class="text-white text-sm">Meslek:</label>
-        <input type="text" id="job" value="{{ $member->job }}" name="job" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Meslek bilgisi ekleyin.">
+        <input type="text" id="job" value="{{ $member->job }}" name="job" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Meslek bilgisi ekleyin.">
     </div>
     <div>
         <label for="gender" class="text-white text-sm">Cinsiyet:</label><br>
@@ -43,15 +43,15 @@
     </div>
     <div>
         <label for="phone" class="text-white text-sm">Telefon Numarası:</label>
-        <input type="text" id="phone" value="{{ $member->phone }}" name="phone" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="+90 (5__) ____">
+        <input type="text" id="phone" value="{{ $member->phone }}" name="phone" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="+90 (5__) ____">
     </div>
     <div>
         <label for="email" class="text-white text-sm">E-mail Adresi:</label>
-        <input type="text" id="email" value="{{ $member->email }}" name="email" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="E-posta adresini girin.">
+        <input type="text" id="email" value="{{ $member->email }}" name="email" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="E-posta adresini girin.">
     </div>
     <div>
         <label for="injury" class="text-white text-sm">Spor yapmaya engel bir sakatlık?</label>
-        <input type="text" id="injury" value="{{ $member->injury }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sakatlık yoksa (-) yazın.">
+        <input type="text" id="injury" value="{{ $member->injury }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
         <label for="package" class="text-white text-sm">Paket Seçimi:</label>

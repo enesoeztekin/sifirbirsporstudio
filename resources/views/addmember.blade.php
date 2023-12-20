@@ -10,19 +10,19 @@
     <form action="{{ route('add-member') }}" method="POST" class="max-w-md mt-10 flex flex-col gap-10">
         @csrf
     <div>
-            <label for="fullname" class="text-white text-sm">Adı Soyadı:</label>
-            <input type="text" value="{{ old('fullname') }}" id="fullname" name="fullname" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Tam adı girin.">
+            <label for="fullname" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Adı Soyadı:</label>
+            <input type="text" value="{{ old('fullname') }}" id="fullname" name="fullname" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Tam adı girin.">
     </div>
     <div>
-        <label for="age" class="text-white text-sm">Yaş:</label>
-        <input type="text" id="age" value="{{ old('age') }}" name="age" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Üyenin yaşını girin.">
+        <label for="age" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Yaş:</label>
+        <input type="text" id="age" value="{{ old('age') }}" name="age" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Üyenin yaşını girin.">
     </div>
     <div>
         <label for="job" class="text-white text-sm">Meslek:</label>
-        <input type="text" id="job" value="{{ old('job') }}" name="job" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Meslek bilgisi ekleyin.">
+        <input type="text" id="job" value="{{ old('job') }}" name="job" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Meslek bilgisi ekleyin.">
     </div>
     <div>
-        <label for="gender" class="text-white text-sm">Cinsiyet:</label><br>
+        <label for="gender" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Cinsiyet:</label><br>
 
        <div class="flex gap-3 mt-2">
          <div>
@@ -42,23 +42,23 @@
        </div>
     </div>
     <div>
-        <label for="phone" class="text-white text-sm">Telefon Numarası:</label>
-        <input type="text" id="phone" value="{{ old('phone') }}" name="phone" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="+90 (5__) ____">
+        <label for="phone" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Telefon Numarası:</label>
+        <input type="text" id="phone" value="{{ old('phone') }}" name="phone" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="+90 (5__) ____">
     </div>
     <div>
         <label for="email" class="text-white text-sm">E-mail Adresi:</label>
-        <input type="text" id="email" value="{{ old('email') }}" name="email" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="E-posta adresini girin.">
+        <input type="text" id="email" value="{{ old('email') }}" name="email" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="E-posta adresini girin.">
     </div>
     <div>
         <label for="injury" class="text-white text-sm">Spor yapmaya engel bir sakatlık?</label>
-        <input type="text" id="injury" value="{{ old('injury') }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sakatlık yoksa (-) yazın.">
+        <input type="text" id="injury" value="{{ old('injury') }}" name="injury" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
         <label for="startingdate" class="text-white text-sm">Üyelik Başlangıç Tarihi:</label>
-        <input type="datetime-local" id="startingdate" value="{{ old('startingdate') }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-800" placeholder="Sakatlık yoksa (-) yazın.">
+        <input type="datetime-local" id="startingdate" value="{{ old('startingdate') }}" name="startingdate" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12 placeholder:text-gray-400" placeholder="Sakatlık yoksa (-) yazın.">
     </div>
     <div>
-        <label for="package" class="text-white text-sm">Paket Seçimi:</label>
+        <label for="package" class="text-white text-sm"><span class="text-red-600 font-bold">*</span> Paket Seçimi:</label>
         <select id="package" name="package" class="block mt-3 py-2 px-4 w-full rounded-lg text-sm h-12">
            @foreach ($packages as $package)
                <option value="{{$package->id}}">{{$package->package_name}} / {{$package->package_cost}} ₺</option>
