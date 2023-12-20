@@ -3,9 +3,9 @@
         <thead>
             <tr>
                 <th
-                    class="px-8 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                     Sıra </th>
-                <th
+                                <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                     Üye </th>
                 <th
@@ -23,16 +23,18 @@
         <tbody class="bg-white">
             @foreach ($members as $member)
             <tr>
-                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap w-4 text-center">
-                    <div class="text-sm leading-6 text-gray-500 font-normal">{{$loop->index + 1}}</div>
-                </td>
-                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                    <td class="px-4 py-4 border-b border-gray-200 whitespace-nowrap w-4 text-center">
+                        <div class="text-sm leading-6 text-gray-500 font-normal">{{$loop->index + 1}}</div>
+                    </td>
+                                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10"><img class="w-10 h-10 rounded-full"
                                 src="{{ asset('assets/sfrbir.png') }}" alt=""></div>
                         <div class="ml-4">
                             <div class="text-sm font-bold leading-8 text-gray-900">{{$member->fullname}}</div>
-                            <div class="text-sm leading-6 font-medium text-gray-500">{{$member->email}}</div>
+                            @if ($member->email != "-")
+                                <div class="text-sm leading-6 font-medium text-gray-500">{{$member->email}}</div>
+                            @endif
                             <div class="text-sm leading-6 font-medium text-gray-500">{{$member->phone}}</div>
                         </div>
                     </div>
