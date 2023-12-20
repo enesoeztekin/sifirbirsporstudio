@@ -26,17 +26,17 @@
 
        <div class="flex gap-3 mt-2">
          <div>
-             <input type="radio" id="male" name="gender" value="male" class="ml-1" checked="{{ $member->gender }}">
+             <input type="radio" id="male" name="gender" value="male" class="ml-1" {{ $member->gender == "Erkek" ? "checked" : null }}>
              <label for="male" class="text-white text-sm">Erkek</label><br>
          </div>
 
          <div>
-             <input type="radio" id="female" name="gender" value="female" class="ml-1">
+             <input type="radio" id="female" name="gender" value="female" class="ml-1" {{ $member->gender == "Kadın" ? "checked" : null }}>
              <label for="female" class="text-white text-sm">Kadın</label><br>
          </div>
 
          <div>
-             <input type="radio" id="other" name="gender" value="other" class="ml-1">
+             <input type="radio" id="other" name="gender" value="other" class="ml-1" {{ $member->gender == "Diğer" ? "checked" : null }}>
              <label for="other" class="text-white text-sm">Diğer</label><br>
          </div>
        </div>
