@@ -204,7 +204,14 @@ class MemberController extends Controller
         $membership = Membership::where('member_id', $id)->first();
         $package_id = $request->input('package');
         $package = Package::where('id', $package_id)->first();
+
+        // Package changed:
         if($membership->package_id != $package_id){
+            $old_package_id = $membership->package_id;
+            $old_package_name = Package::where('id', $old_package_id)->first()->package_name;
+            $old_package_cost = Package::where('id', $old_package_id)->first()->package_cost;
+            $new_package_cost = $package->package_cost;
+
             $membership->package_id = $package_id;
             $membership->package_period = $package->package_period;
             $membership->is_student = $package->is_student;
@@ -216,6 +223,17 @@ class MemberController extends Controller
             $starting_date = $membership->starting_date;
             $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
             $membership->freeze_right_count = $package->freeze_right_count;
+
+            // Add a new transaction.
+            $transaction = new Transaction();
+            $transaction->member_id = $membership->member_id;
+            $transaction->name = $old_package_name." -> ".$package->package_name." Paket Değişikliği". "  (".$member->fullname.")";
+            $transaction->created_at = Carbon::now('Turkey');
+            $transaction->amount = $new_package_cost - $old_package_cost;
+            $result = $transaction->save();
+            if(!$result){
+                return back()->with('error', 'Üyenin paketi güncellendi fakat muhasebe kaydı eklenmedi.');
+            }
         }
 
         // Starting date changed:

@@ -100,7 +100,13 @@
                                                 <div class="text-sm font-medium leading-5 text-gray-500">{{$transaction->created_at}}</div>
                                             </td>
                                             <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                                                <div class="text-sm font-bold leading-5 text-green-600">{{$transaction->amount}} ₺</div>
+                                                @if ($transaction->amount > 0)
+                                                    <div class="text-sm font-bold leading-5 text-green-600">{{$transaction->amount}} ₺</div>
+                                                @elseif ($transaction->amount < 0)
+                                                    <div class="text-sm font-bold leading-5 text-red-600">{{$transaction->amount}} ₺</div>
+                                                @else
+                                                    <div class="text-sm font-bold leading-5 text-gray-600">{{$transaction->amount}} ₺</div>
+                                                @endif
                                             </td>
                                             <td class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
                                                         <a href="/transaction/del/{{$transaction->id}}" class="text-indigo-600 hover:text-indigo-900">
