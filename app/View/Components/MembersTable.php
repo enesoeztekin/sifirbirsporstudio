@@ -7,10 +7,12 @@ use Illuminate\View\Component;
 class MembersTable extends Component
 {
     public $members;
+    public $isSorted;
 
-    public function __construct($members)
+    public function __construct($members, $isSorted = false)
     {
         $this->members = $members;
+        $this->isSorted = $isSorted;
     }
 
     public function render()

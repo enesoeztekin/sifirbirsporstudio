@@ -22,7 +22,7 @@
 </div>
 <div class="flex flex-col">
     <div class="py-2 -my-2 overflow-x-auto">
-        <x-members-table :members="$members" />
+        <x-members-table :members="$members" :isSorted="true" />
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>

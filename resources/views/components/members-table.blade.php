@@ -2,10 +2,12 @@
     <table id="membersTable" class="min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
         <thead>
             <tr>
+                @if ($isSorted)
                 <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                     Sıra </th>
-                                <th
+                @endif
+                <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                     Üye </th>
                 <th
@@ -23,9 +25,12 @@
         <tbody class="bg-white">
             @foreach ($members as $member)
             <tr>
+                @if ($isSorted)
                     <td class="px-4 py-4 border-b border-gray-200 whitespace-nowrap w-4 text-center">
                         <div class="text-sm leading-6 text-gray-500 font-normal">{{$loop->index + 1}}</div>
                     </td>
+                @endif
+
                                 <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10"><img class="w-10 h-10 rounded-full"
