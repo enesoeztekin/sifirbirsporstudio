@@ -65,9 +65,9 @@
                                                     <div class="flex-shrink-0 w-10 h-10"><img class="w-10 h-10 rounded-full"
                                                             src="{{ asset('assets/sfrbir.png') }}"
                                                             alt=""></div>
-                                                    <div class="ml-4">
+                                                    <a class="ml-4" href="/measurements/{{$member->id}}">
                                                         <div class="text-sm font-medium leading-5 text-gray-900">{{$member->fullname}}</div>
-                                                    </div>
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
