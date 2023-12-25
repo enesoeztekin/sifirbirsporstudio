@@ -28,4 +28,8 @@ class Membership extends Model
     public function package() {
         return $this->belongsTo(Package::class, 'package_id');
     }
+
+    public function member() {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
 }

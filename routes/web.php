@@ -98,6 +98,9 @@ Route::get('/measurement/add/{memberId}', [MeasurementController::class, 'getMem
 // Get package by id
 Route::get('/package/{id}', [PackageController::class, 'getPackage'])->name('getPackage');
 
+// Get members by package id
+Route::get('/package/{id}/members', [PackageController::class, 'getMembersByPackageId'])->name('getMembersByPackageId');
+
 // Get member by id
 Route::get('/member/edit/{id}', [MemberController::class, 'getMember'])->name('getMember');
 

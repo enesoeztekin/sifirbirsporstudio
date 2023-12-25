@@ -19,4 +19,8 @@ class Package extends Model
         'is_vip',
         // Diğer fillable özellikleriniz...
     ];
+
+    public function memberships() {
+        return $this->hasMany(Membership::class, 'package_id');
+    }
 }

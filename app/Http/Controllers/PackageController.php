@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Package;
+use App\Models\Membership;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -31,6 +33,19 @@ class PackageController extends Controller
         }
 
         return view('editpackage')->with('package', $package);
+    }
+
+    public function getMembersByPackageId($id){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
+        $package = Package::with('memberships.member')->find($id);
+        if(!$package){
+            return redirect('packages')->withError('error', 'Paket bulunamadı.');
+        }
+
+        return view('packagemembers')->with('package', $package);
     }
 
     public function add(Request $request)
