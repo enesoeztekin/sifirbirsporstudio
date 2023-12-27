@@ -366,5 +366,71 @@ class MemberController extends Controller
         return redirect('members')->with('success', 'Üyelik aktif edildi.');
     }
 
+    public function extendMembership($memberId){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
+        $packages = Package::all();
+        $member = Member::where('id', $memberId)->select('id', 'fullname')->first();
+
+        if(!$member){
+            return back()->with('error', 'Üye bulunamadı.');
+        }
+
+        return view('extendmembership')->with('packages', $packages)->with('member', $member);
+    }
+
+    public function extend($memberId, Request $request){
+        if(!Auth::check()){
+            return redirect('login');
+        }
+
+        $package = Package::find($request->package);
+        if(!$package){
+            return back()->with('error', 'Paket bulunamadı.');
+        }
+
+        $member = Member::find($memberId)->first();
+
+        if(!$member){
+            return back()->with('error', 'Üye bulunamadı.');
+        }
+
+        $membership = Membership::where('member_id', $memberId)->first();
+
+        if(!$membership){
+            return back()->with('error', 'Üye bulunamadı.');
+        }
+
+        $membership->package_id = $package->id;
+        if($request->startingdate != NULL){
+            $membership->starting_date = Carbon::parse($request->startingdate)->setTimezone('Turkey');
+            $membership->package_period = $package->package_period;
+            $membership->expiration_date = Carbon::parse($request->startingdate)->addMonth($package->package_period);
+
+        }else {
+            $membership->package_period += $package->package_period;
+            $membership->expiration_date = Carbon::parse($membership->expiration_date)->addMonth($package->package_period);
+        }
+        $result = $membership->save();
+        if(!$result){
+            return back()->with('error', 'Üyelik uzatma işlemi başarısız. Lütfen tekrar deneyin.');
+        }
+
+        $transaction = new Transaction();
+        $transaction->member_id = $membership->member_id;
+        $transaction->name = $package->package_name." Paketi Uzatma". "  (".$member->fullname.")";
+        $transaction->created_at = Carbon::now('Turkey');
+        $transaction->amount = $package->package_cost;
+        $result = $transaction->save();
+
+        if(!$result){
+            return back()->with('error', 'Üyelik uzatma işlemi başarısız. Lütfen tekrar deneyin.');
+        }
+
+        return redirect('members')->with('success', 'Üyelik uzatma işlemi başarılı.');
+    }
+
 
 }

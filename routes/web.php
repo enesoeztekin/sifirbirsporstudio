@@ -107,6 +107,9 @@ Route::get('/member/edit/{id}', [MemberController::class, 'getMember'])->name('g
 // Get measurement by id
 Route::get('/measurement/{measurementId}', [MeasurementController::class, 'getMeasurement'])->name('getMeasurement');
 
+// Get all packages and member by member id for extend membership page
+Route::get('/membership/extend/{memberId}', [MemberController::class, 'extendMembership']);
+
 // Add a new package
 Route::post('/package/add', [PackageController::class, 'add'])->name('add-package');
 
@@ -132,6 +135,9 @@ Route::post('/measurement/{measurementId}', [MeasurementController::class, 'upda
 Route::post('/auth', [LoginController::class, 'auth'])->name('auth');
 
 Route::post('/settings/changepassword', [AdminUserController::class, 'changePassword'])->name('change-password');
+
+// Extend membership page
+Route::post('/membership/extend/{memberId}', [MemberController::class, 'extend'])->name('extend-membership');
 
 // // Get All Members
 // Route::post('/member/all', [MemberController::class, 'all'])->name('all');
