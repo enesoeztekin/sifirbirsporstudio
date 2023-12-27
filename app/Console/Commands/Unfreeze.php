@@ -30,7 +30,6 @@ class Unfreeze extends Command
      */
     public function handle()
     {
-        $this->info("çalıştı");
         $today = Carbon::today("Turkey");
         $memberships = Membership::where('freeze_expiration_date', '=', $today)->get();
         foreach ($memberships as $membership) {
