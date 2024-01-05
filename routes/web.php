@@ -8,6 +8,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MeasurementController;
 use App\Http\Controllers\AccountingController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,10 +42,10 @@ Route::get('/members', [MemberController::class, 'all']);
 Route::get('/packages', [PackageController::class, 'index'])->name('index');
 
 // Get all measurements
-Route::get('/measurements', [MeasurementController::class,'all'])->name('all');
+Route::get('/measurements', [MeasurementController::class, 'all'])->name('all');
 
 // Get measurement by member_id
-Route::get('/measurements/{memberId}', [MeasurementController::class,'getMeasurementsByMemberId'])->name('getMeasurementsByMemberId');
+Route::get('/measurements/{memberId}', [MeasurementController::class, 'getMeasurementsByMemberId'])->name('getMeasurementsByMemberId');
 
 // Get all accounting transactions
 Route::get('/accounting', [AccountingController::class, 'index'])->name('index');

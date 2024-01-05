@@ -15,8 +15,9 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        if(!Auth::check()){
+    public function index()
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
@@ -29,6 +30,6 @@ class DashboardController extends Controller
 
         $totalMemberCount = Membership::count();
         $activeMemberCount = Membership::whereDate('expiration_date', '>=', Carbon::now())->count();
-        return view('dashboard')->with('members', $lastFiveMembers)->with('totalMemberCount', $totalMemberCount)->with('maleMemberCount', $maleMemberCount)->with('femaleMemberCount', $femaleMemberCount)->with('activeMemberCount', $activeMemberCount);
+        return view('dashboard')->with('members', $lastFiveMembers)->with('totalMemberCount', $totalMemberCount)->with('maleMemberCount', $maleMemberCount)->with('femaleMemberCount', $femaleMemberCount)->with('activeMemberCount', $activeMemberCount)->with('now', Carbon::now("Turkey"));
     }
 }

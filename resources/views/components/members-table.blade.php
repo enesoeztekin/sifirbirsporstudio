@@ -75,7 +75,7 @@
                     @endif
                 </td>
                 <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                    @if ($member->membership->starting_date <= $member->membership->expiration_date)
+                    @if ($now <= $member->membership->expiration_date)
                         @if ($member->membership->is_freezed)
                         <span
                             class="inline-flex px-2 text-xs font-semibold leading-5 text-white bg-sky-400 rounded-full">Donduruldu</span>

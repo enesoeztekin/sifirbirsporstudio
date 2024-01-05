@@ -90,7 +90,7 @@
 <div class="flex flex-col">
     <div class="py-2 -my-2 overflow-x-auto">
         <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-            <x-members-table :members="$members" />
+            <x-members-table :members="$members" :isSorted="false" :now="$now" />
         </div>
     </div>
 </div>

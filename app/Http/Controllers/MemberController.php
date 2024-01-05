@@ -17,8 +17,9 @@ use App\View\Components\UsersTable;
 class MemberController extends Controller
 {
 
-    public function index(){
-        if(!Auth::check()){
+    public function index()
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
@@ -26,8 +27,9 @@ class MemberController extends Controller
         return view('addmember')->with('packages', $packages);
     }
 
-    public function all(Request $request){
-        if(!Auth::check()){
+    public function all(Request $request)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
@@ -48,25 +50,25 @@ class MemberController extends Controller
 
 
         $members = Member::with([
-            'membership'=>function($q){
+            'membership' => function ($q) {
                 $q->get();
             },
-        ])->select('id','fullname', 'email', 'phone')->get();
+        ])->select('id', 'fullname', 'email', 'phone')->get();
         //dd(gettype($members[0]->membership->freeze_expiration_date));
-        return view('members')->with('members', $members);
+        return view('members')->with('members', $members)->with('now', Carbon::now("Turkey"));
     }
 
     public function add(Request $request)
     {
-        if(!Auth::check()){
-           return redirect('login');
+        if (!Auth::check()) {
+            return redirect('login');
         }
 
         $request->validate([
-            'fullname' =>'required',
-            'age' =>'required',
-            'gender' =>'required',
-            'phone' =>'required',
+            'fullname' => 'required',
+            'age' => 'required',
+            'gender' => 'required',
+            'phone' => 'required',
             'package' => 'required',
         ]);
 
@@ -76,11 +78,11 @@ class MemberController extends Controller
         $member->age = $request->input('age');
         $member->job = $request->input('job') ? $request->input('job') : "-";
 
-        if($request->input('gender') == "male"){
+        if ($request->input('gender') == "male") {
             $member->gender = "Erkek";
-        }else if ($request->input('gender') == "female"){
+        } else if ($request->input('gender') == "female") {
             $member->gender = "Kadın";
-        }else{
+        } else {
             $member->gender = "Diğer";
         }
 
@@ -91,7 +93,7 @@ class MemberController extends Controller
         $result = $member->save();
 
         // Checking if an error occured during saving
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Bir şeyler yanlış gitti! Lütfen tekrar deneyiniz.');
         }
 
@@ -116,20 +118,20 @@ class MemberController extends Controller
 
         $result = $membership->save();
 
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Üyelik oluştururken hata ile karşılaşıldı. Lütfen tekrar deneyin.');
         }
 
         //Creating a new transaction.
         $transaction = new Transaction();
         $transaction->member_id = $member->id;
-        $transaction->name = $package->package_name . " Paket Satışı". " -> ". $member->fullname;
+        $transaction->name = $package->package_name . " Paket Satışı" . " -> " . $member->fullname;
         $transaction->created_at = Carbon::now('Turkey');
         $transaction->amount = $package->package_cost;
 
         $result = $transaction->save();
 
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'üyelik oluşturuldu fakat işlem oluşturulamadı. Muhasabe sayfasından işlem ekleyin.');
         }
 
@@ -137,8 +139,9 @@ class MemberController extends Controller
         return redirect('members')->with('success', 'Üye eklendi.');
     }
 
-    public function getMember($id){
-        if(!Auth::check()){
+    public function getMember($id)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
@@ -154,7 +157,7 @@ class MemberController extends Controller
         )->where('id', $id)->first();
 
 
-        if(!$member){
+        if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
@@ -166,7 +169,7 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect('login');
         }
 
@@ -177,26 +180,26 @@ class MemberController extends Controller
         $member->age = $request->input('age');
         $member->job = $request->input('job');
 
-        if($request->input('gender') == "male"){
+        if ($request->input('gender') == "male") {
             $member->gender = "Erkek";
-        }else if ($request->input('gender') == "female"){
+        } else if ($request->input('gender') == "female") {
             $member->gender = "Kadın";
-        }else{
+        } else {
             $member->gender = "Diğer";
         }
 
         $member->phone = $request->input('phone');
         $member->email = $request->input('email');
 
-        if(!$request->input('injury')){
+        if (!$request->input('injury')) {
             $member->injury = "-";
-        }else{
+        } else {
             $member->injury = $request->input('injury');
         }
 
         $result = $member->save();
 
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Üye güncellenemedi. Lütfen tekrar deneyin.');
         }
 
@@ -206,7 +209,7 @@ class MemberController extends Controller
         $package = Package::where('id', $package_id)->first();
 
         // Package changed:
-        if($membership->package_id != $package_id){
+        if ($membership->package_id != $package_id) {
             $old_package_id = $membership->package_id;
             $old_package_name = Package::where('id', $old_package_id)->first()->package_name;
             $old_package_cost = Package::where('id', $old_package_id)->first()->package_cost;
@@ -227,27 +230,27 @@ class MemberController extends Controller
             // Add a new transaction.
             $transaction = new Transaction();
             $transaction->member_id = $membership->member_id;
-            $transaction->name = $old_package_name." -> ".$package->package_name." Paket Değişikliği". "  (".$member->fullname.")";
+            $transaction->name = $old_package_name . " -> " . $package->package_name . " Paket Değişikliği" . "  (" . $member->fullname . ")";
             $transaction->created_at = Carbon::now('Turkey');
             $transaction->amount = $new_package_cost - $old_package_cost;
             $result = $transaction->save();
-            if(!$result){
+            if (!$result) {
                 return back()->with('error', 'Üyenin paketi güncellendi fakat muhasebe kaydı eklenmedi.');
             }
         }
 
         // Starting date changed:
-        if($request->input('startingdate') && $request->input('startingdate') != $membership->starting_date){
+        if ($request->input('startingdate') && $request->input('startingdate') != $membership->starting_date) {
             $membership->starting_date = Carbon::parse($request->input('startingdate'))->setTimezone('Turkey');
 
             // Both package and starting date changed:
-            if($membership->package_id != $package_id){
+            if ($membership->package_id != $package_id) {
                 $membership->package_id = $package_id;
                 $months_to_add = $package->package_period;
                 $starting_date = $request->input('startingdate');
                 $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
                 $membership->freeze_right_count = $package->freeze_right_count;
-            }else { // Only starting date changed, package stays the same:
+            } else { // Only starting date changed, package stays the same:
                 $months_to_add = $membership->package_period;
                 $starting_date = $request->input('startingdate');
                 $membership->expiration_date = Carbon::parse($starting_date)->addMonth($months_to_add);
@@ -255,22 +258,22 @@ class MemberController extends Controller
         }
         $result = $membership->save();
 
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Üye güncellenemedi. Lütfen tekrar deneyin.');
         }
 
         return redirect('members')->with('success', 'Üye güncellendi.');
-
     }
 
-    public function delete($id){
-        if(!Auth::check()){
+    public function delete($id)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         $member = Member::find($id);
 
-        if(!$member){
+        if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
@@ -283,14 +286,15 @@ class MemberController extends Controller
         return back()->with('success', 'Üye silindi.');
     }
 
-    public function cancel($id){
-        if(!Auth::check()){
+    public function cancel($id)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         $member = Member::find($id);
 
-        if(!$member){
+        if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
@@ -306,15 +310,16 @@ class MemberController extends Controller
     }
 
 
-    public function freeze($memberId){
-        if(!Auth::check()){
+    public function freeze($memberId)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         // Find membership by member_id from database
         $membership = Membership::where('member_id', $memberId)->where('freeze_right_count', '>', 0)->first();
 
-        if(!$membership){
+        if (!$membership) {
             return redirect('members')->with('error', 'Üyelik (dondurma hakkı) bulunamadı.');
         }
 
@@ -326,22 +331,23 @@ class MemberController extends Controller
         $membership->freeze_expiration_date = Carbon::parse($freeze_starting_date)->addMonth($max_freezing_period);
         $result = $membership->save();
 
-        if(!$result){
+        if (!$result) {
             return redirect('members')->with('error', 'Üyelik dondurma işlemi başarısız. Lütfen tekrar deneyin.');
         }
 
         return redirect('members')->with('success', 'Üyelik donduruldu.');
     }
 
-    public function unfreeze($memberId){
-        if(!Auth::check()){
+    public function unfreeze($memberId)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         // Find membership that is_freezed equals 1 by member_id from database
         $membership = Membership::where('member_id', $memberId)->where('is_freezed', 1)->first();
 
-        if(!$membership){
+        if (!$membership) {
             return redirect('members')->with('error', 'Dondurulmuş üyelik bulunamadı.');
         }
 
@@ -359,78 +365,77 @@ class MemberController extends Controller
         $membership->freeze_expiration_date = NULL;
         $result = $membership->save();
 
-        if(!$result){
+        if (!$result) {
             return redirect('members')->with('error', 'Üyelik dondurma işlemi başarısız. Lütfen tekrar deneyin.');
         }
 
         return redirect('members')->with('success', 'Üyelik aktif edildi.');
     }
 
-    public function extendMembership($memberId){
-        if(!Auth::check()){
+    public function extendMembership($memberId)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         $packages = Package::all();
         $member = Member::where('id', $memberId)->select('id', 'fullname')->first();
 
-        if(!$member){
+        if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
         return view('extendmembership')->with('packages', $packages)->with('member', $member);
     }
 
-    public function extend($memberId, Request $request){
-        if(!Auth::check()){
+    public function extend($memberId, Request $request)
+    {
+        if (!Auth::check()) {
             return redirect('login');
         }
 
         $package = Package::find($request->package);
-        if(!$package){
+        if (!$package) {
             return back()->with('error', 'Paket bulunamadı.');
         }
 
         $member = Member::find($memberId)->first();
 
-        if(!$member){
+        if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
         $membership = Membership::where('member_id', $memberId)->first();
 
-        if(!$membership){
+        if (!$membership) {
             return back()->with('error', 'Üye bulunamadı.');
         }
 
         $membership->package_id = $package->id;
-        if($request->startingdate != NULL){
+        if ($request->startingdate != NULL) {
             $membership->starting_date = Carbon::parse($request->startingdate)->setTimezone('Turkey');
             $membership->package_period = $package->package_period;
             $membership->expiration_date = Carbon::parse($request->startingdate)->addMonth($package->package_period);
-
-        }else {
+        } else {
             $membership->package_period += $package->package_period;
             $membership->expiration_date = Carbon::parse($membership->expiration_date)->addMonth($package->package_period);
         }
         $result = $membership->save();
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Üyelik uzatma işlemi başarısız. Lütfen tekrar deneyin.');
         }
 
         $transaction = new Transaction();
         $transaction->member_id = $membership->member_id;
-        $transaction->name = $package->package_name." Paketi Uzatma". "  (".$member->fullname.")";
+        $transaction->name = $package->package_name . " Paketi Uzatma" . "  (" . $member->fullname . ")";
         $transaction->created_at = Carbon::now('Turkey');
         $transaction->amount = $package->package_cost;
         $result = $transaction->save();
 
-        if(!$result){
+        if (!$result) {
             return back()->with('error', 'Üyelik uzatma işlemi başarısız. Lütfen tekrar deneyin.');
         }
 
         return redirect('members')->with('success', 'Üyelik uzatma işlemi başarılı.');
     }
-
-
 }
