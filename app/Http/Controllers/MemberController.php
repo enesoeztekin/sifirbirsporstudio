@@ -399,7 +399,7 @@ class MemberController extends Controller
             return back()->with('error', 'Paket bulunamadı.');
         }
 
-        $member = Member::find($memberId)->first();
+        $member = Member::find($memberId);
 
         if (!$member) {
             return back()->with('error', 'Üye bulunamadı.');
