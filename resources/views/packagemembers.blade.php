@@ -175,7 +175,7 @@
                     @endif
                 </td>
             </tr>
-            <x-modal :member="$membership->member" />
+            <x-modal :member="$membership->member" :now="$now"/>
             @endforeach
         </tbody>
     </table>
