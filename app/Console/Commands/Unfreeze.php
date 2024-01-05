@@ -34,8 +34,8 @@ class Unfreeze extends Command
         $memberships = Membership::where('freeze_expiration_date', '=', $today)->get();
         foreach ($memberships as $membership) {
             $member = Member::find($membership->member_id);
-            if ($member){
-                $this->info("Sayın, ". $member->fullname. " dondurma süreniz dolduğundan üyeliğinizin otomatik olarak tekrardan aktif edilmiştir.");
+            if ($member) {
+                $this->info("Sayın, " . $member->fullname . " dondurma süreniz dolduğundan üyeliğinizin otomatik olarak tekrardan aktif edilmiştir.");
                 $daysToAdd = 30; // Max dondurma süresi = 30 gün.
                 $membership->is_freezed = 0;
                 $membership->expiration_date = Carbon::parse($membership->expiration_date)->addDays($daysToAdd);
