@@ -31,7 +31,7 @@ class Unfreeze extends Command
     public function handle()
     {
         $today = Carbon::today("Turkey");
-        $memberships = Membership::where('freeze_expiration_date', '=', $today)->get();
+        $memberships = Membership::where('freeze_expiration_date', '<=', $today)->get();
         foreach ($memberships as $membership) {
             $member = Member::find($membership->member_id);
             if ($member) {

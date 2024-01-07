@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('subscription')->daily();
-        $schedule->command('unfreeze')->everyThreeHours();
+        $schedule->command('unfreeze')->everyMinute();
     }
 
     /**
