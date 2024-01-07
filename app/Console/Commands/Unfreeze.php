@@ -42,8 +42,8 @@ class Unfreeze extends Command
                 $membership->freeze_starting_date = NULL;
                 $membership->freeze_expiration_date = NULL;
                 $membership->save();
-                return Command::SUCCESS;
             }
         }
+        return Command::SUCCESS;
     }
 }
